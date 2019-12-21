@@ -26,7 +26,7 @@ cmd: pulp-tools
 	source configs/$(CONFIG).sh && ./pulp-tools/bin/plpbuild $(SDK_OPT)
 
 pulp-tools:
-	git submodule update --init
+	git submodule update --init pulp-tools pulp-configs json-tools plptest
 
 .PHONY: pulp-tools pulpissimo
 

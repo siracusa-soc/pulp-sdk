@@ -10,3 +10,30 @@
 [submodule "plptest"]
 	path = plptest
 	url = https://github.com/pulp-platform/plptest.git
+[submodule "runtime/pulp-rt"]
+	path = runtime/pulp-rt
+	url = git@github.com:pulp-platform/pulp-rt.git
+[submodule "runtime/archi"]
+	path = runtime/archi
+	url = git@github.com:pulp-platform/archi.git
+[submodule "runtime/hal"]
+	path = runtime/hal
+	url = git@github.com:pulp-platform/hal.git
+[submodule "runtime/pmsis_bsp"]
+	path = runtime/pmsis_bsp
+	url = git@github.com:GreenWaves-Technologies/pmsis_bsp.git
+[submodule "runtime/pmsis_api"]
+	path = runtime/pmsis_api
+	url = git@github.com:GreenWaves-Technologies/pmsis_api.git
+[submodule "runtime/pulpos"]
+	path = runtime/pulpos
+	url = git@iis-git.ee.ethz.ch:greenwaves-technologies/pulpos.git
+[submodule "runtime/pulpos_gap8"]
+	path = runtime/pulpos_gap8
+	url = git@gitlab.greenwaves-tech.com:gwt_sdk_developer/pulpos_gap8.git
+[submodule "platform/gvsoc"]
+	path = platform/gvsoc
+	url = git@github.com:pulp-platform/gvsoc.git
+[submodule "platform/dpi_models"]
+	path = platform/dpi_models
+	url = git@github.com:pulp-platform/dpi-models.git
