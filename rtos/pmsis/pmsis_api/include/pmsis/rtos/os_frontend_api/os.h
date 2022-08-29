@@ -166,6 +166,8 @@ void pi_task_terminate(void *task_handler);
  */
 static inline void pi_yield();
 
+static inline void pi_yield_polling();
+
 /**
  * @} addtogroup Task
  */

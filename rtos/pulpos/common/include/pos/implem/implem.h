@@ -166,6 +166,15 @@ static inline void pi_yield()
 
 }
 
+static inline void pi_yield_polling()
+{
+    int irq = hal_irq_disable();
+    pos_task_handle_polling();
+    hal_irq_restore(irq);
+
+}
+
+
 extern unsigned char __l1_heap_start;
 extern unsigned char __l1_heap_size;
 
