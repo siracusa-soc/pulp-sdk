@@ -5,19 +5,11 @@ ifndef platform
 ifdef PMSIS_PLATFORM
 platform = $(PMSIS_PLATFORM)
 endif
+else
+platform=gvsoc
 endif
 
-ifeq '$(PMSIS_OS)' 'pulpos'
-ifeq '$(TARGET_CHIP)' 'GAP9_V2'
 export USE_PULPOS=1
-endif
-ifeq '$(TARGET_CHIP)' 'PULP'
-export USE_PULPOS=1
-endif
-ifeq '$(TARGET_CHIP)' 'SIRACUSA'
-export USE_PULPOS=1
-endif
-endif
 
 ifndef USE_PULPOS
 ifeq ($(BOARD_NAME), gapoc_a)
@@ -53,6 +45,34 @@ endif
 ifdef runner_args
 export GVSOC_OPTIONS=$(runner_args)
 endif
+
+ifdef GAPY_PY_TARGET
+ifeq '$(platform)' 'gvsoc'
+use_py_target=1
+endif
+endif
+
+# FS config
+
+ifdef PULPOS_PLATFORM
+platform=$(PULPOS_PLATFORM)
+endif
+
+ifndef platform
+platform=gvsoc
+endif
+
+ifeq '$(platform)' 'gvsoc'
+READFS_FLASH ?= hyperflash
+override runner_args += $(foreach file, $(READFS_FILES), --flash-property=$(file)@$(READFS_FLASH):readfs:files)
+override runner_args += $(foreach file, $(HOSTFS_FILES), --flash-property=$(file)@$(READFS_FLASH):hostfs:files)
+else
+READFS_FLASH ?= flash
+override config_args += $(foreach file, $(READFS_FILES), --config-opt=**/$(READFS_FLASH)/content/partitions/readfs/files=$(file))
+override config_args += $(foreach file, $(HOSTFS_FILES), --config-opt=**/flash/content/partitions/hostfs/files=$(file))
+endif
+
+GAPY_TARGET_OPT = --py-target=$(GAPY_PY_TARGET)
 
 ifeq '$(PMSIS_OS)' 'freertos'
 

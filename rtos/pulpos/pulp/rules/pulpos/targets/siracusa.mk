@@ -62,7 +62,12 @@ CONFIG_I3C=1
 CONFIG_PAD=1
 
 # FLL
+ifeq '$(platform)' 'gvsoc'
+PULP_SRCS     += kernel/fll-v$(fll/version).c
+PULP_SRCS     += kernel/freq-domains.c
+else
 PULP_SRCS     += kernel/chips/siracusa/pll.c
+endif
 PULP_SRCS     += kernel/chips/siracusa/soc.c
 
 # I3C driver

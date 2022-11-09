@@ -23,6 +23,7 @@ export PULPOS_BOARD_PROFILE=siracusa
 export PULPOS_TARGET=siracusa
 export PULPOS_SYSTEM=siracusa
 export GAPY_TARGET=siracusa
+export GAPY_V2_TARGET=siracusa
 
 export PULPOS_MODULES="$PULP_SDK_HOME/rtos/pulpos/pulp $PULP_SDK_HOME/rtos/pmsis/pmsis_bsp"
 

@@ -29,6 +29,12 @@ ifdef PULP_RISCV_GCC_TOOLCHAIN
 PULP_CC := $(PULP_RISCV_GCC_TOOLCHAIN)/bin/$(PULP_CC)
 PULP_LD := $(PULP_RISCV_GCC_TOOLCHAIN)/bin/$(PULP_LD)
 PULP_AR := $(PULP_RISCV_GCC_TOOLCHAIN)/bin/$(PULP_AR)
+PULP_CFLAGS += -fno-jump-tables -fno-tree-loop-distribute-patterns
+endif
+ifdef PULP_RISCV_LLVM_TOOLCHAIN
+PULP_CC := $(PULP_RISCV_LLVM_TOOLCHAIN)/bin/clang
+PULP_LD := $(PULP_RISCV_LLVM_TOOLCHAIN)/bin/$(PULP_LD)
+PULP_AR := $(PULP_RISCV_LLVM_TOOLCHAIN)/bin/$(PULP_AR)
 endif
 endif
 endif
@@ -37,7 +43,6 @@ VPATH = $(PULPOS_HOME) $(PULPOS_MODULES)
 
 include $(PULPOS_HOME)/rules/pulpos/src.mk
 
-PULP_CFLAGS += -fno-jump-tables -fno-tree-loop-distribute-patterns
 
 ifeq '$(CONFIG_LIBC_MINIMAL)' '1'
 PULP_APP_CFLAGS += -I$(PULPOS_HOME)/lib/libc/minimal/include
@@ -60,16 +65,16 @@ override disopt ?= -d
 PULP_CFLAGS += -D__PULPOS2__
 
 ifeq '$(platform)' 'gvsoc'
-PULP_CFLAGS += -D__PLATFORM__=ARCHI_PLATFORM_GVSOC
+PULP_CFLAGS += -D__PLATFORM__=ARCHI_PLATFORM_GVSOC -D__PLATFORM_GVSOC__
 endif
 ifeq '$(platform)' 'board'
-PULP_CFLAGS += -D__PLATFORM__=ARCHI_PLATFORM_BOARD
+PULP_CFLAGS += -D__PLATFORM__=ARCHI_PLATFORM_BOARD -D__PLATFORM_BOARD__
 endif
 ifeq '$(platform)' 'rtl'
-PULP_CFLAGS += -D__PLATFORM__=ARCHI_PLATFORM_RTL
+PULP_CFLAGS += -D__PLATFORM__=ARCHI_PLATFORM_RTL -D__PLATFORM_RTL__
 endif
 ifeq '$(platform)' 'fpga'
-PULP_CFLAGS += -D__PLATFORM__=ARCHI_PLATFORM_FPGA
+PULP_CFLAGS += -D__PLATFORM__=ARCHI_PLATFORM_FPGA -D__PLATFORM_FPGA__
 endif
 
 ifdef io
@@ -277,31 +282,91 @@ $(foreach static_lib, $(PULP_STATIC_LIBS), $(eval $(call declare_static_lib,$(st
 
 
 
+ifeq '$(platform)' 'gvsoc'
+USE_NEW_GAPY=1
+endif
+
 
 conf:
 
 build: $(TARGETS)
 
+ifdef USE_NEW_GAPY
+
+GAPY_TARGET_OPT = --target=$(GAPY_V2_TARGET)
+
+use_gvsoc_target = 0
+
+ifeq '$(platform)' 'gvsoc'
+use_gvsoc_target = 1
+endif
+
+ifdef GVSOC_COSIM
+use_gvsoc_target = 1
+endif
+
+ifeq '$(use_gvsoc_target)' '1'
+GAPY_TARGET_OPT += --target-dir=$(GVSOC_PULP_SRC_PATH)/targets
+endif
+
+GAPY_TARGET_OPT += --target-dir=$(PULP_SDK_HOME)/tools/gapy/targets
+
+override runner_args += --flash-property=boot@flash:rom:boot \
+	--flash-property=$(TARGETS)@flash:rom:binary
+
+GAPY_CMD = $(PULP_SDK_HOME)/tools/gapy_v2/bin/gapy $(GAPY_TARGET_OPT) \
+	--platform=$(platform) \
+	--work-dir=$(TARGET_BUILD_DIR) \
+	--binary=$(TARGETS) \
+	$(config_args) $(gapy_args) $(runner_args)
+
 image:
-	gapy --target=$(GAPY_TARGET) --platform=$(platform) --work-dir=$(TARGET_BUILD_DIR) $(config_args) $(gapy_args) run --image --binary=$(TARGETS) $(runner_args)
+	$(GAPY_CMD) image
 
 flash:
-	gapy --target=$(GAPY_TARGET) --platform=$(platform) --work-dir=$(TARGET_BUILD_DIR) $(config_args) $(gapy_args) run --flash --binary=$(TARGETS) $(runner_args)
+	$(GAPY_CMD) flash
+
+exec:
+	$(GAPY_CMD) run
+
+run: build
+	$(GAPY_CMD) image flash run
+
+gvsoc.prepare:
+	$(GAPY_CMD) prepare
+
+gvsoc.run:
+	cd $(TARGET_BUILD_DIR) && gvsoc_launcher --config=gvsoc_config.json
+
+gvsoc.run_debug:
+	cd $(TARGET_BUILD_DIR) && gvsoc_launcher_debug --config=gvsoc_config.json
+
+else
+
+GAPY = gapy
+
+image:
+	gapy $(GAPY_TARGET_OPT) --platform=$(platform) --work-dir=$(TARGET_BUILD_DIR) $(config_args) $(gapy_args) run --image --binary=$(TARGETS) $(runner_args)
+
+flash:
+	gapy $(GAPY_TARGET_OPT) --platform=$(platform) --work-dir=$(TARGET_BUILD_DIR) $(config_args) $(gapy_args) run --flash --binary=$(TARGETS) $(runner_args)
+
+run.prepare:
+	gapy $(GAPY_TARGET_OPT) --platform=$(platform) --work-dir=$(TARGET_BUILD_DIR) $(config_args) $(gapy_args) run --exec-prepare --binary=$(TARGETS) $(runner_args)
+
+run.exec:
+	gapy $(GAPY_TARGET_OPT) --platform=$(platform) --work-dir=$(TARGET_BUILD_DIR) $(config_args) $(gapy_args) run --exec --binary=$(TARGETS) $(runner_args)
+
+run:
+	gapy $(GAPY_TARGET_OPT) --platform=$(platform) --work-dir=$(TARGET_BUILD_DIR) $(config_args) $(gapy_args) run --exec-prepare --exec --binary=$(TARGETS) $(runner_args)
+
+endif
 
 all:: build image flash
 
 clean::
 	@echo "RM  $(TARGET_BUILD_DIR)"
 	$(V)rm -rf $(TARGET_BUILD_DIR)
-
-run.prepare:
-	gapy --target=$(GAPY_TARGET) --platform=$(platform) --work-dir=$(TARGET_BUILD_DIR) $(config_args) $(gapy_args) run --exec-prepare --binary=$(TARGETS) $(runner_args)
-
-run.exec:
-	gapy --target=$(GAPY_TARGET) --platform=$(platform) --work-dir=$(TARGET_BUILD_DIR) $(config_args) $(gapy_args) run --exec --binary=$(TARGETS) $(runner_args)
-
-run:
-	gapy --target=$(GAPY_TARGET) --platform=$(platform) --work-dir=$(TARGET_BUILD_DIR) $(config_args) $(gapy_args) run --exec-prepare --exec --binary=$(TARGETS) $(runner_args)
 
 dis:
 	$(PULP_OBJDUMP) $(PULP_ARCH_OBJDFLAGS) $(disopt) $(TARGETS)
@@ -319,7 +384,7 @@ size:
 	$(PULPOS_HOME)/bin/pos-size --binary=$(TARGETS) --depth=10
 
 profiler:
-	gapy --target=$(GAPY_TARGET) --platform=$(platform) --work-dir=$(BUILDDIR) $(config_args) $(gapy_args) --config-opt="gvsoc/events/gen_gtkw=false" run --image --flash --exec-prepare --binary=$(BIN) --event=.*@all.bin --event-format=raw $(runner_args)
+	gapy $(GAPY_TARGET_OPT) --platform=$(platform) --work-dir=$(BUILDDIR) $(config_args) $(gapy_args) --config-opt="gvsoc/events/gen_gtkw=false" run --image --flash --exec-prepare --binary=$(BIN) --event=.*@all.bin --event-format=raw $(runner_args)
 	cd $(BUILDDIR) && if [ -e all.bin ]; then rm all.bin; fi; mkfifo all.bin
 	cd $(BUILDDIR) && export PULP_CONFIG_FILE=$(BUILDDIR)/gvsoc_config.json && profiler $(BUILDDIR) $(BIN) gvsoc_config.json
 
