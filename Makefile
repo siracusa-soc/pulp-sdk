@@ -24,8 +24,8 @@ CMAKE ?= cmake
 
 build:
 	$(CMAKE) -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-		-DTARGET=$(GAPY_V2_TARGET) \
-		-DTARGET_OPT="$(GAPY_NEW_TARGET_OPT)" \
+		-DGVSOC_MODULES="$(GVSOC_MODULES)" \
+		-DGVSOC_TARGETS=${GVSOC_TARGETS} \
 		-DCMAKE_INSTALL_PREFIX=$(PULP_SDK_HOME)/install/workstation
 	$(CMAKE) --build build $(CMAKE_FLAGS)
 	$(CMAKE) --install build

@@ -306,10 +306,11 @@ use_gvsoc_target = 1
 endif
 
 ifeq '$(use_gvsoc_target)' '1'
-GAPY_TARGET_OPT += --target-dir=$(GVSOC_PULP_SRC_PATH)/targets
-endif
-
+GAPY_TARGET_OPT += $(foreach module,$(subst ;, , $(GVSOC_MODULES)),--target-dir=$(module)/models)
+GAPY_TARGET_OPT += --install-dir=$(INSTALL_DIR)/python
+else
 GAPY_TARGET_OPT += --target-dir=$(PULP_SDK_HOME)/tools/gapy/targets
+endif
 
 override runner_args += --flash-property=boot@flash:rom:boot \
 	--flash-property=$(TARGETS)@flash:rom:binary
