@@ -1,0 +1,3 @@
+[submodule "tools/gvsoc"]
+	path = tools/gvsoc
+	url = git@github.com:gvsoc/gvsoc.git
