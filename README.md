@@ -61,7 +61,7 @@ For basic helloworld test, go to a test/hello and execute:
 make clean all run platform=gvsoc
 ~~~~~
 
-For basic camera cooectivity test go to tests/camera/connectivity
+For basic camera connectivity test go to tests/camera/connectivity
 
 ~~~~~shell
 make clean all run platform=gvsoc
