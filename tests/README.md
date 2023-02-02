@@ -114,3 +114,10 @@ To check if the environment is correctly set:
 cd tests/hello
 make clean all run
 ~~~~~
+
+To check basic camera connectivity test:
+
+~~~~~shell
+cd tests/camera/connectivity
+make clean all run
+~~~~~
