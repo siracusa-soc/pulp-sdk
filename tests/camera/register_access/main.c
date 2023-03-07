@@ -30,6 +30,8 @@
 
 int glob_errors=0;
 
+#define CMEM_BASE_ADDRESS 0x11000000
+
 int run_test() {
     CAMERA_WRITE_REG(CAMERA_REG_FRAMES           , 0x00);
     CAMERA_WRITE_REG(CAMERA_REG_ROWS             , 0x04);
@@ -50,6 +52,8 @@ int run_test() {
     CAMERA_WRITE_REG(CAMERA_SPECIAL_TRACE_REG, CAMERA_L3_ALL);
 
     CAMERA_WRITE_CMD(CAMERA_COMMIT_AND_TRIGGER, CAMERA_TRIGGER_CMD);
+
+    CAMERA_BARRIER();
 
   return 0;
 }
@@ -88,9 +92,11 @@ static int launch_cluster_task() {
 }
 
 int test_entry() {
-
+  // uint32_t *cmem_addr = CMEM_BASE_ADDRESS+0xc;
+  // printf("cmem_addr=%d, *cmem_addr=%d\n", cmem_addr, *cmem_addr);
   volatile int errors = launch_cluster_task();
-  
+  // printf("cmem_addr=%d, *cmem_addr=%d\n", cmem_addr, *cmem_addr);
+  // int errors=0;
   if (errors)
     printf("Test failure\n");
   else
@@ -99,6 +105,8 @@ int test_entry() {
 }
 
 void test_kickoff(void *arg) {
+  // uint32_t *cmem_addr = CMEM_BASE_ADDRESS+0xc;
+  // printf("cmem_addr=%d, *cmem_addr=%d\n", cmem_addr, *cmem_addr);
   int ret = test_entry();
   pmsis_exit(ret);
 }

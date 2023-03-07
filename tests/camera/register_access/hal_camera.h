@@ -28,8 +28,8 @@
 // global address map + event IDs
 #define CAMERA_ADDR_BASE    0x00201c00
 #define CLUS_CTRL_ADDR_BASE 0x00200000
-#define CAMERA_EVT0           12
-#define CAMERA_EVT1           13
+#define CAMERA_EVT0           13
+#define CAMERA_EVT1           14
 
 // commands
 #define CAMERA_COMMIT_AND_TRIGGER 0x00
@@ -60,7 +60,7 @@
 #define CAMERA_REG_RANDOM_SEED      0x30
 #define CAMERA_REG_GEN_RANDOM       0x34
 
-#define CAMERA_SPECIAL_TRACE_REG 0x60
+#define CAMERA_SPECIAL_TRACE_REG 0x38
 #define CAMERA_L0_JOB_START_END 0
 #define CAMERA_L1_CONFIG        1
 #define CAMERA_L2_ACTIV_INOUT   2
