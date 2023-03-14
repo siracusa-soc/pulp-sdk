@@ -93,12 +93,6 @@ static void cluster_entry2(void *arg) {
   }
 }
 
-static void cluster_entry1(void *arg) {
-  if(pi_core_id() == 0) {
-    printf("cluster_id=%d, core_id=%d\n", pi_cluster_id(), pi_core_id());
-  }
-}
-
 static int launch_cluster_task() {
   struct pi_device cluster_dev;
   struct pi_cluster_conf conf;
@@ -114,27 +108,28 @@ static int launch_cluster_task() {
   conf.id = 0;
   glob_errors = 0;
 
-  // pi_cluster_conf_init(&conf2);
-  // conf2.id = 1;
-  // glob_errors2 = 0;
+  pi_cluster_conf_init(&conf2);
+  conf2.id = 1;
+  glob_errors2 = 0;
 
   pi_open_from_conf(&cluster_dev, &conf);
   pi_cluster_open(&cluster_dev);
-  pi_cluster_task(&task, cluster_entry1, NULL);
+  pi_cluster_task(&task, cluster_entry, NULL);
+
+  pi_open_from_conf(&cluster_dev2, &conf2);
+  pi_cluster_open(&cluster_dev2);
+  pi_cluster_task(&task2, cluster_entry2, NULL);
 
 
-  // pi_open_from_conf(&cluster_dev2, &conf2);
-  // pi_cluster_open(&cluster_dev2);
-  // pi_cluster_task(&task2, cluster_entry2, NULL);
 
 
+  pi_cluster_send_task_to_cl_async(&cluster_dev, &task, pi_task_block(&cl_task1));
+  pi_cluster_send_task_to_cl_async(&cluster_dev2, &task2, pi_task_block(&cl_task2));
 
-  pi_cluster_send_task_to_cl_async(&cluster_dev, &task, &cl_task1);
-  // pi_cluster_send_task_to_cl_async(&cluster_dev2, &task2, &cl_task2);
   pi_task_wait_on(&cl_task1);
-  // pi_task_wait_on(&cl_task2);
+  pi_task_wait_on(&cl_task2);
   pi_cluster_close(&cluster_dev);
-  // pi_cluster_close(&cluster_dev2);
+  pi_cluster_close(&cluster_dev2);
 
   return glob_errors;
 }

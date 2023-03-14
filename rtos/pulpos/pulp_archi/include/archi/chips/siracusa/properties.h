@@ -90,7 +90,7 @@
 #ifndef ARCHI_CLUSTER_NB_PE
 #define ARCHI_CLUSTER_NB_PE 8
 #endif
-#define ARCHI_NB_CLUSTER    1
+#define ARCHI_NB_CLUSTER    2
 
 
 
