@@ -37,6 +37,15 @@ clean:
 checkout:
 	git submodule update --recursive --init
 
+gvsoc_sim: build
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make run platform=gvsoc
+
+gvsoc_sim_trace: build
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make run platform=gvsoc runner_args="--trace=camera --trace-level=trace"
+
+gvsoc_sim_trace_file: build
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make run platform=gvsoc runner_args="--trace=camera:log.txt"
+
 all: checkout build
 
 
