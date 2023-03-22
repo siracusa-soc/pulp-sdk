@@ -145,6 +145,8 @@ int camera_compare_int(uint32_t *actual_y, uint32_t *golden_y, int n_iters, int 
   int errors = 0;
   int non_zero_values = 0;
 
+  int count = 0;
+
   for (int i=0; i<n_iters; i++) {
     for(int j=0; j<n_rows; j++) {
       for(int k=0; k<n_col_words; k++){
@@ -154,6 +156,8 @@ int camera_compare_int(uint32_t *actual_y, uint32_t *golden_y, int n_iters, int 
           golden_word = *(golden_addr);
           int error = (int) (actual_word != golden_word);
           errors += (int) (actual_word != golden_word);
+          count++;
+          printf(" Error 0x%08x <- 0x%08x @ 0x%08x @ 0x%08x\n", golden_word, actual_word, (actual_addr-actual_y), (golden_addr-golden_y));
           if(error) {
           if(errors==1) printf("  golden     <- actual     @ address    @ index\n");
             printf(" Error 0x%08x <- 0x%08x @ 0x%08x @ 0x%08x\n", golden_word, actual_word, (actual_addr-actual_y), (golden_addr-golden_y));
@@ -161,6 +165,7 @@ int camera_compare_int(uint32_t *actual_y, uint32_t *golden_y, int n_iters, int 
       }
     }
   }
+  printf("Counter value=%d\n", count);
   return errors;
 }
 

@@ -28,6 +28,7 @@ DL ?= 1
 NI ?= 0
 NR ?= 2
 NC ?= 16
+ARGS ?= "--trace=cmem:cmem.txt --trace=camera:camera.txt --trace=converter:converter.txt"
 
 build:
 	$(CMAKE) -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -56,7 +57,14 @@ gvsoc_sim_trace_file: build
 gvsoc_sim_trace_cmem_file: build
 	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) run platform=gvsoc runner_args="--trace=cmem:cmem.txt --trace=camera:camera.txt"
 
+gvsoc_sim_trace_all_file: build
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) run platform=gvsoc runner_args="--trace=.*:all.txt"
 
+gvsoc_sim_trace_all: build
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) run platform=gvsoc runner_args="--trace=.*"
+
+gvsoc_sim_run_args: build
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) run platform=gvsoc runner_args=$(ARGS)
 all: checkout build
 
 
