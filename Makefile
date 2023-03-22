@@ -23,8 +23,8 @@ CMAKE_FLAGS ?= -j 6
 CMAKE ?= cmake
 
 EL ?= 8
-RL ?= 1
-DL ?= 1
+RL ?= 3
+DL ?= 10
 NI ?= 0
 NR ?= 2
 NC ?= 16

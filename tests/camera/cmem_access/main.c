@@ -104,11 +104,11 @@ void test_kickoff(void *arg) {
   int* cmem_addr;
   cmem_addr = CMEM_BASE_ADDRESS+4;
 
-  printf("cmem_addr_base=%x, cmem_addr_data=%x\n",cmem_addr, *cmem_addr);
+  // printf("cmem_addr_base=%x, cmem_addr_data=%x\n",cmem_addr, *cmem_addr);
   int ret = test_entry();
   
   ret = camera_compare_int(CMEM_BASE_ADDRESS, golden_data , CFG_N_ITERS+1, CFG_N_ROWS, CFG_N_COLS/4, MAX_N_FRAMES, MAX_N_COLS, MAX_N_ROWS) ;
-  printf("cmem_addr_base=%x, cmem_addr_data=%x\n",cmem_addr, *cmem_addr);
+  // printf("cmem_addr_base=%x, cmem_addr_data=%x\n",cmem_addr, *cmem_addr);
   pmsis_exit(ret);
 }
 

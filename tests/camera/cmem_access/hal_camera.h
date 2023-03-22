@@ -157,7 +157,7 @@ int camera_compare_int(uint32_t *actual_y, uint32_t *golden_y, int n_iters, int 
           int error = (int) (actual_word != golden_word);
           errors += (int) (actual_word != golden_word);
           count++;
-          printf(" Error 0x%08x <- 0x%08x @ 0x%08x @ 0x%08x\n", golden_word, actual_word, (actual_addr-actual_y), (golden_addr-golden_y));
+          // printf(" Error 0x%08x <- 0x%08x @ 0x%08x @ 0x%08x\n", golden_word, actual_word, (actual_addr-actual_y), (golden_addr-golden_y));
           if(error) {
           if(errors==1) printf("  golden     <- actual     @ address    @ index\n");
             printf(" Error 0x%08x <- 0x%08x @ 0x%08x @ 0x%08x\n", golden_word, actual_word, (actual_addr-actual_y), (golden_addr-golden_y));
