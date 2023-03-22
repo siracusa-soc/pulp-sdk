@@ -31,7 +31,8 @@
 
 int glob_errors=0;
 
-#define CMEM_BASE_ADDRESS 0x11000000
+#define WR_BASE_ADDRESS 0x00001000
+// #define WR_BASE_ADDRESS 0x11000000
 
 #define MAX_N_FRAMES 10
 #define MAX_N_ROWS 400
@@ -39,11 +40,13 @@ int glob_errors=0;
 #define MAX_N_CHANNELS 1
 
 int run_test() {
+  int ret=0xff;
     CAMERA_WRITE_REG(CAMERA_REG_FRAMES           , 0x00);
     CAMERA_WRITE_REG(CAMERA_REG_ROWS             , CFG_N_ROWS);
     CAMERA_WRITE_REG(CAMERA_REG_COLS             , CFG_N_COLS);
     CAMERA_WRITE_REG(CAMERA_REG_CHANNELS         , 0x01);
     CAMERA_WRITE_REG(CAMERA_REG_ITERS            , CFG_N_ITERS);
+    CAMERA_WRITE_REG(CAMERA_REG_WRITE_ADDRESS    , WR_BASE_ADDRESS);
     CAMERA_WRITE_REG(CAMERA_REG_EXPOSURE_LATENCY , EXPOSURE_LATENCY);
     CAMERA_WRITE_REG(CAMERA_REG_RESET_LATENCY    , RESET_LATENCY);
     CAMERA_WRITE_REG(CAMERA_REG_READOUT_LATENCY  , READOUT_LATENCY);
@@ -54,8 +57,9 @@ int run_test() {
     CAMERA_WRITE_CMD(CAMERA_COMMIT_AND_TRIGGER, CAMERA_TRIGGER_CMD);
 
     CAMERA_BARRIER();
+    ret = camera_compare_int(WR_BASE_ADDRESS, golden_data , CFG_N_ITERS+1, CFG_N_ROWS, CFG_N_COLS/4, MAX_N_FRAMES, MAX_N_COLS, MAX_N_ROWS) ;
 
-  return 0;
+  return ret;
 }
 
 static struct pi_cluster_task task[1];
@@ -102,13 +106,9 @@ int test_entry() {
 
 void test_kickoff(void *arg) {
   int* cmem_addr;
-  cmem_addr = CMEM_BASE_ADDRESS+4;
-
-  // printf("cmem_addr_base=%x, cmem_addr_data=%x\n",cmem_addr, *cmem_addr);
   int ret = test_entry();
   
-  ret = camera_compare_int(CMEM_BASE_ADDRESS, golden_data , CFG_N_ITERS+1, CFG_N_ROWS, CFG_N_COLS/4, MAX_N_FRAMES, MAX_N_COLS, MAX_N_ROWS) ;
-  // printf("cmem_addr_base=%x, cmem_addr_data=%x\n",cmem_addr, *cmem_addr);
+  // ret = camera_compare_int(WR_BASE_ADDRESS+0x10000000, golden_data , CFG_N_ITERS+1, CFG_N_ROWS, CFG_N_COLS/4, MAX_N_FRAMES, MAX_N_COLS, MAX_N_ROWS) ;
   pmsis_exit(ret);
 }
 
