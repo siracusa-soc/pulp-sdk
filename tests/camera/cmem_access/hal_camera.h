@@ -55,7 +55,7 @@
 #define CAMERA_REG_EXPOSURE_LATENCY 0x1c
 #define CAMERA_REG_RESET_LATENCY    0x20
 #define CAMERA_REG_READOUT_LATENCY  0x24
-#define CAMERA_REG_ADC_LATENCY      0x28
+#define CAMERA_REG_BANDWIDTH        0x28
 #define CAMERA_REG_WRITE_ADDRESS    0x2c
 #define CAMERA_REG_RANDOM_SEED      0x30
 #define CAMERA_REG_GEN_RANDOM       0x34
@@ -65,6 +65,7 @@
 #define CAMERA_L1_CONFIG        1
 #define CAMERA_L2_ACTIV_INOUT   2
 #define CAMERA_L3_ALL           3
+#define CAMERA_STDOUT      4
 
 // cluster controller register offset and bits
 #define CLUS_CTRL_HWPE_OFFS              0x18
@@ -165,7 +166,7 @@ int camera_compare_int(uint32_t *actual_y, uint32_t *golden_y, int n_iters, int 
       }
     }
   }
-  printf("Counter value=%d\n", count);
+  // printf("Counter value=%d\n", count);
   return errors;
 }
 

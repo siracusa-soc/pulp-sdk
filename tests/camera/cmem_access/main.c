@@ -31,8 +31,8 @@
 
 int glob_errors=0;
 
-#define WR_BASE_ADDRESS 0x00001000
-// #define WR_BASE_ADDRESS 0x11000000
+// #define WR_BASE_ADDRESS 0x00001000
+#define WR_BASE_ADDRESS 0x11000000
 
 #define MAX_N_FRAMES 10
 #define MAX_N_ROWS 400
@@ -50,9 +50,10 @@ int run_test() {
     CAMERA_WRITE_REG(CAMERA_REG_EXPOSURE_LATENCY , EXPOSURE_LATENCY);
     CAMERA_WRITE_REG(CAMERA_REG_RESET_LATENCY    , RESET_LATENCY);
     CAMERA_WRITE_REG(CAMERA_REG_READOUT_LATENCY  , READOUT_LATENCY);
+    CAMERA_WRITE_REG(CAMERA_REG_BANDWIDTH        , CFG_BANDWIDTH);
 
 
-    CAMERA_WRITE_REG(CAMERA_SPECIAL_TRACE_REG, CAMERA_L3_ALL);
+    CAMERA_WRITE_REG(CAMERA_SPECIAL_TRACE_REG, CAMERA_L0_JOB_START_END);
 
     CAMERA_WRITE_CMD(CAMERA_COMMIT_AND_TRIGGER, CAMERA_TRIGGER_CMD);
 
@@ -96,6 +97,7 @@ static int launch_cluster_task() {
 }
 
 int test_entry() {
+
   volatile int errors = launch_cluster_task();
   if (errors)
     printf("Test failure\n");
@@ -108,7 +110,6 @@ void test_kickoff(void *arg) {
   int* cmem_addr;
   int ret = test_entry();
   
-  // ret = camera_compare_int(WR_BASE_ADDRESS+0x10000000, golden_data , CFG_N_ITERS+1, CFG_N_ROWS, CFG_N_COLS/4, MAX_N_FRAMES, MAX_N_COLS, MAX_N_ROWS) ;
   pmsis_exit(ret);
 }
 
