@@ -17,6 +17,7 @@
 /*
  * Authors:  Francesco Conti <fconti@iis.ee.ethz.ch>
  *           Renzo Andri <andrire@iis.ee.ethz.ch>
+             Arpan Prasad <prasadar@iis.ee.ethz.ch>
  */
 #include <stdio.h>
 
@@ -59,12 +60,14 @@
 #define CAMERA_REG_WRITE_ADDRESS    0x2c
 #define CAMERA_REG_RANDOM_SEED      0x30
 #define CAMERA_REG_GEN_RANDOM       0x34
+#define CAMERA_REG_TRACE_STDOUT     0x38
 
-#define CAMERA_SPECIAL_TRACE_REG 0x38
+#define CAMERA_SPECIAL_TRACE_REG 0x42
 #define CAMERA_L0_JOB_START_END 0
 #define CAMERA_L1_CONFIG        1
 #define CAMERA_L2_ACTIV_INOUT   2
 #define CAMERA_L3_ALL           3
+#define CAMERA_STDOUT           4
 
 // cluster controller register offset and bits
 #define CLUS_CTRL_HWPE_OFFS              0x18

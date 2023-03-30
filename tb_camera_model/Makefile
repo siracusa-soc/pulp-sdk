@@ -46,7 +46,7 @@ NR ?= 2
 NC ?= 16
 BW ?= 32
 
-BIG_BUILD_DIR ?= $(shell pwd)/$(BUILD_DIR)/$(UUID)EL$(K_IN)_RL$(RL)_DL$(DL)_NI$(NI)_NR$(NR)_NC$(NC)_BW$(BW)
+BIG_BUILD_DIR ?= $(shell pwd)/$(BUILD_DIR)/$(UUID)EL$(EL)_RL$(RL)_DL$(DL)_NI$(NI)_NR$(NR)_NC$(NC)_BW$(BW)
 
 $(BIG_BUILD_DIR):
 	mkdir -p $(BIG_BUILD_DIR)
@@ -68,6 +68,9 @@ clean-sw:
 
 clean: clean-sw
 
+clean_all: 
+	rm -rf $(shell pwd)/$(BUILD_DIR)/
+
 sim:
 	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) platform=gvsoc; fi
 
@@ -79,3 +82,11 @@ sim_trace_vcd:
 
 sim_trace_all:
 	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW)  platform=gvsoc runner_args="--trace=.*:all_trace.txt"; fi
+sim_trace_router:
+	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW)  platform=gvsoc runner_args="--trace=router:router_trace.txt"; fi
+
+
+generate_yaml:
+	python sw/generate_stimuli.py
+run_all: generate_yaml
+	./run_regression.sh && python sw/stimuli_check.py
