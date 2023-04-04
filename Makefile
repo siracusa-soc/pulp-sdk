@@ -28,6 +28,8 @@ DL ?= 10
 NI ?= 0
 NR ?= 2
 NC ?= 16
+BW ?= 32
+STDOUT ?= 0
 # ARGS ?= "--trace=cmem:cmem.txt --trace=camera:camera.txt --trace=converter:converter.txt"
 ARGS ?= "--trace=camera"
 build:
@@ -47,28 +49,28 @@ checkout:
 
 
 gvsoc_sim_camera_neureka: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/neureka_interaction && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) all run platform=gvsoc runner_args=$(ARGS)
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/neureka_interaction && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args=$(ARGS)
 
 gvsoc_sim: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) all run platform=gvsoc
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc
 
 gvsoc_sim_trace: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) all run platform=gvsoc runner_args="--trace=camera --trace-level=trace"
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args="--trace=camera/trace"
 
 gvsoc_sim_trace_file: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) all run platform=gvsoc runner_args="--trace=camera:log.txt"
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args="--trace=camera:log.txt"
 
 gvsoc_sim_trace_cmem_file: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) all run platform=gvsoc runner_args="--trace=cmem:cmem.txt --trace=camera:camera.txt"
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args="--trace=cmem:cmem.txt --trace=camera:camera.txt"
 
 gvsoc_sim_trace_all_file: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) all run platform=gvsoc runner_args="--trace=.*:all.txt"
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args="--trace=.*:all.txt"
 
 gvsoc_sim_trace_all: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) all run platform=gvsoc runner_args="--trace=.*"
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args="--trace=.*"
 
 gvsoc_sim_args: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) all run platform=gvsoc runner_args=$(ARGS)
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args=$(ARGS)
 all: checkout build
 
 

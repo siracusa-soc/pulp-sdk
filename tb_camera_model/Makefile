@@ -45,6 +45,7 @@ NI ?= 0
 NR ?= 2
 NC ?= 16
 BW ?= 32
+STDOUT ?= 0
 
 BIG_BUILD_DIR ?= $(shell pwd)/$(BUILD_DIR)/$(UUID)EL$(EL)_RL$(RL)_DL$(DL)_NI$(NI)_NR$(NR)_NC$(NC)_BW$(BW)
 
@@ -72,18 +73,25 @@ clean_all:
 	rm -rf $(shell pwd)/$(BUILD_DIR)/
 
 sim:
-	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) platform=gvsoc; fi
+	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) platform=gvsoc; fi
 
 sim_trace:
-	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW)  platform=gvsoc runner_args="--trace=camera/trace:trace.txt"; fi
+	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT)  platform=gvsoc runner_args="--trace=camera/trace:trace.txt"; fi
 
 sim_trace_vcd:
-	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW)  platform=gvsoc runner_args="--trace=camera:camera_trace.txt --vcd --event=.*"; fi
+	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT)  platform=gvsoc runner_args="--trace=camera:camera_trace.txt --vcd --event=.*"; fi
+
+sim_trace_cmem:
+	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT)  platform=gvsoc runner_args="--trace=cmem:cmem_trace.txt"; fi
+
+sim_trace_l1_cmem:
+	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT)  platform=gvsoc runner_args="--trace=l1:l1_trace.txt --trace=cmem:cmem.txt"; fi
+
 
 sim_trace_all:
-	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW)  platform=gvsoc runner_args="--trace=.*:all_trace.txt"; fi
+	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT)  platform=gvsoc runner_args="--trace=.*:all_trace.txt"; fi
 sim_trace_router:
-	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW)  platform=gvsoc runner_args="--trace=router:router_trace.txt"; fi
+	if [ -d $(BIG_BUILD_DIR) ]; then cd $(BIG_BUILD_DIR); $(MAKE) all run EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT)  platform=gvsoc runner_args="--trace=router:router_trace.txt"; fi
 
 
 generate_yaml:
