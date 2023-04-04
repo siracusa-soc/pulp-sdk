@@ -47,7 +47,7 @@ NC ?= 16
 BW ?= 32
 STDOUT ?= 0
 
-BIG_BUILD_DIR ?= $(shell pwd)/$(BUILD_DIR)/$(UUID)EL$(EL)_RL$(RL)_DL$(DL)_NI$(NI)_NR$(NR)_NC$(NC)_BW$(BW)
+BIG_BUILD_DIR ?= $(shell pwd)/$(BUILD_DIR)/$(UUID)EL$(EL)_RL$(RL)_DL$(DL)_NI$(NI)_NR$(NR)_NC$(NC)_BW$(BW)_STDOUT$(STDOUT)
 
 $(BIG_BUILD_DIR):
 	mkdir -p $(BIG_BUILD_DIR)
@@ -97,4 +97,4 @@ sim_trace_router:
 generate_yaml:
 	python sw/generate_stimuli.py
 run_all: generate_yaml
-	./run_regression.sh && python sw/stimuli_check.py
+	./run_regression.sh && python sw/check_output.py

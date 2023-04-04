@@ -35,6 +35,7 @@ def extract_params(workload_path):
    expected_cycles = extract_expected_cycles(param_dict)
    param_dict["ExpectedCycles"] = expected_cycles
    param_dict["diff"] = np.abs(int(expected_cycles) - int(actual_cycles))
+   param_dict["relative_diff"] = np.abs(int(expected_cycles) - int(actual_cycles))/(expected_cycles)
    return param_dict
 
 def extract_expected_cycles(params):
@@ -48,7 +49,7 @@ def extract_expected_cycles(params):
    if(BW>MEM_BW):
       BW=MEM_BW
    bw_cycles = math.ceil(NC/BW)*math.ceil(BW/MEM_BW)
-   readout_cycles = bw_cycles if (bw_cycles>DL) else DL
+   readout_cycles = bw_cycles if (bw_cycles>DL*bw_cycles) else DL*bw_cycles
 
    cycles = (EL+RL)*(1+NI)+NR*(1+NI)*readout_cycles+(NI+2)
    # print(f'params{params} with readout_cycles={readout_cycles} total_cycles={cycles}')
@@ -64,4 +65,5 @@ for entry in entries:
    df = pd.concat([df,df_row])
 df=df.reset_index()  
 print(f'Sum of difference obtained = {df["diff"].sum()}')
+print(f'Relative difference obtained = {df["relative_diff"].sum()}')
 df.to_csv("result.csv")

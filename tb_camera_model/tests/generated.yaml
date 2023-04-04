@@ -1,0 +1,301 @@
+camera_basic_tests:
+  EL35_RL3_DL0_NI2_NR251_NC220_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=35 RL=3 DL=0 NI=2 NR=251 NC=220 BW=16 STDOUT=0
+  EL28_RL0_DL0_NI2_NR199_NC240_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=28 RL=0 DL=0 NI=2 NR=199 NC=240 BW=40 STDOUT=0
+  EL8_RL17_DL0_NI1_NR21_NC8_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=8 RL=17 DL=0 NI=1 NR=21 NC=8 BW=12 STDOUT=0
+  EL6_RL17_DL0_NI0_NR4_NC16_BW4_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=6 RL=17 DL=0 NI=0 NR=4 NC=16 BW=4 STDOUT=0
+  EL55_RL17_DL0_NI2_NR127_NC172_BW20_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=55 RL=17 DL=0 NI=2 NR=127 NC=172 BW=20 STDOUT=0
+  EL11_RL0_DL0_NI1_NR192_NC212_BW36_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=11 RL=0 DL=0 NI=1 NR=192 NC=212 BW=36 STDOUT=0
+  EL13_RL7_DL0_NI0_NR21_NC64_BW28_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=13 RL=7 DL=0 NI=0 NR=21 NC=64 BW=28 STDOUT=0
+  EL13_RL14_DL0_NI3_NR130_NC216_BW28_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=13 RL=14 DL=0 NI=3 NR=130 NC=216 BW=28 STDOUT=0
+  EL100_RL15_DL0_NI3_NR112_NC240_BW28_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=100 RL=15 DL=0 NI=3 NR=112 NC=240 BW=28 STDOUT=0
+  EL0_RL4_DL0_NI3_NR76_NC248_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=0 RL=4 DL=0 NI=3 NR=76 NC=248 BW=16 STDOUT=0
+  EL95_RL9_DL0_NI2_NR19_NC256_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=95 RL=9 DL=0 NI=2 NR=19 NC=256 BW=40 STDOUT=0
+  EL27_RL15_DL0_NI1_NR242_NC248_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=27 RL=15 DL=0 NI=1 NR=242 NC=248 BW=40 STDOUT=0
+  EL60_RL15_DL0_NI3_NR28_NC80_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=60 RL=15 DL=0 NI=3 NR=28 NC=80 BW=24 STDOUT=0
+  EL80_RL20_DL0_NI3_NR98_NC32_BW20_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=80 RL=20 DL=0 NI=3 NR=98 NC=32 BW=20 STDOUT=0
+  EL48_RL0_DL0_NI0_NR10_NC128_BW36_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=48 RL=0 DL=0 NI=0 NR=10 NC=128 BW=36 STDOUT=0
+  EL63_RL16_DL0_NI3_NR108_NC68_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=63 RL=16 DL=0 NI=3 NR=108 NC=68 BW=16 STDOUT=0
+  EL77_RL19_DL0_NI2_NR121_NC240_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=77 RL=19 DL=0 NI=2 NR=121 NC=240 BW=12 STDOUT=0
+  EL88_RL3_DL0_NI1_NR134_NC24_BW4_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=88 RL=3 DL=0 NI=1 NR=134 NC=24 BW=4 STDOUT=0
+  EL72_RL12_DL0_NI2_NR10_NC40_BW20_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=72 RL=12 DL=0 NI=2 NR=10 NC=40 BW=20 STDOUT=0
+  EL84_RL1_DL0_NI0_NR41_NC216_BW36_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=84 RL=1 DL=0 NI=0 NR=41 NC=216 BW=36 STDOUT=0
+  EL73_RL10_DL0_NI1_NR168_NC164_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=73 RL=10 DL=0 NI=1 NR=168 NC=164 BW=12 STDOUT=0
+  EL7_RL0_DL0_NI2_NR13_NC96_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=7 RL=0 DL=0 NI=2 NR=13 NC=96 BW=24 STDOUT=0
+  EL28_RL2_DL0_NI3_NR138_NC216_BW4_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=28 RL=2 DL=0 NI=3 NR=138 NC=216 BW=4 STDOUT=0
+  EL63_RL10_DL0_NI0_NR17_NC92_BW32_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=63 RL=10 DL=0 NI=0 NR=17 NC=92 BW=32 STDOUT=0
+  EL19_RL0_DL0_NI0_NR80_NC168_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=19 RL=0 DL=0 NI=0 NR=80 NC=168 BW=24 STDOUT=0
+  EL61_RL9_DL0_NI0_NR95_NC252_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=61 RL=9 DL=0 NI=0 NR=95 NC=252 BW=40 STDOUT=0
+  EL27_RL0_DL0_NI3_NR37_NC16_BW32_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=27 RL=0 DL=0 NI=3 NR=37 NC=16 BW=32 STDOUT=0
+  EL69_RL5_DL0_NI2_NR59_NC124_BW32_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=69 RL=5 DL=0 NI=2 NR=59 NC=124 BW=32 STDOUT=0
+  EL52_RL16_DL0_NI3_NR238_NC44_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=52 RL=16 DL=0 NI=3 NR=238 NC=44 BW=16 STDOUT=0
+  EL12_RL11_DL0_NI3_NR55_NC8_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=12 RL=11 DL=0 NI=3 NR=55 NC=8 BW=24 STDOUT=0
+  EL13_RL13_DL0_NI0_NR249_NC160_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=13 RL=13 DL=0 NI=0 NR=249 NC=160 BW=24 STDOUT=0
+  EL24_RL3_DL0_NI3_NR47_NC84_BW20_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=24 RL=3 DL=0 NI=3 NR=47 NC=84 BW=20 STDOUT=0
+  EL69_RL8_DL0_NI2_NR40_NC204_BW8_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=69 RL=8 DL=0 NI=2 NR=40 NC=204 BW=8 STDOUT=0
+  EL30_RL3_DL0_NI0_NR55_NC36_BW4_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=30 RL=3 DL=0 NI=0 NR=55 NC=36 BW=4 STDOUT=0
+  EL47_RL17_DL0_NI2_NR204_NC104_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=47 RL=17 DL=0 NI=2 NR=204 NC=104 BW=40 STDOUT=0
+  EL23_RL10_DL0_NI0_NR202_NC8_BW28_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=23 RL=10 DL=0 NI=0 NR=202 NC=8 BW=28 STDOUT=0
+  EL84_RL0_DL0_NI1_NR8_NC188_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=84 RL=0 DL=0 NI=1 NR=8 NC=188 BW=12 STDOUT=0
+  EL49_RL9_DL0_NI1_NR99_NC152_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=49 RL=9 DL=0 NI=1 NR=99 NC=152 BW=40 STDOUT=0
+  EL79_RL9_DL0_NI1_NR235_NC192_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=79 RL=9 DL=0 NI=1 NR=235 NC=192 BW=12 STDOUT=0
+  EL12_RL20_DL0_NI0_NR177_NC68_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=12 RL=20 DL=0 NI=0 NR=177 NC=68 BW=24 STDOUT=0
+  EL8_RL20_DL0_NI0_NR143_NC4_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=8 RL=20 DL=0 NI=0 NR=143 NC=4 BW=40 STDOUT=0
+  EL39_RL1_DL0_NI2_NR125_NC208_BW20_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=39 RL=1 DL=0 NI=2 NR=125 NC=208 BW=20 STDOUT=0
+  EL56_RL14_DL0_NI2_NR57_NC164_BW8_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=56 RL=14 DL=0 NI=2 NR=57 NC=164 BW=8 STDOUT=0
+  EL5_RL15_DL0_NI3_NR189_NC48_BW28_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=5 RL=15 DL=0 NI=3 NR=189 NC=48 BW=28 STDOUT=0
+  EL82_RL8_DL0_NI3_NR127_NC120_BW36_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=82 RL=8 DL=0 NI=3 NR=127 NC=120 BW=36 STDOUT=0
+  EL2_RL17_DL0_NI0_NR29_NC188_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=2 RL=17 DL=0 NI=0 NR=29 NC=188 BW=24 STDOUT=0
+  EL64_RL2_DL0_NI1_NR239_NC52_BW36_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=64 RL=2 DL=0 NI=1 NR=239 NC=52 BW=36 STDOUT=0
+  EL77_RL2_DL0_NI1_NR227_NC216_BW32_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=77 RL=2 DL=0 NI=1 NR=227 NC=216 BW=32 STDOUT=0
+  EL77_RL8_DL0_NI0_NR131_NC84_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=77 RL=8 DL=0 NI=0 NR=131 NC=84 BW=40 STDOUT=0
+  EL49_RL7_DL0_NI0_NR47_NC72_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=49 RL=7 DL=0 NI=0 NR=47 NC=72 BW=12 STDOUT=0
+  EL86_RL18_DL0_NI1_NR33_NC244_BW8_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=86 RL=18 DL=0 NI=1 NR=33 NC=244 BW=8 STDOUT=0
+  EL92_RL20_DL0_NI2_NR163_NC24_BW8_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=92 RL=20 DL=0 NI=2 NR=163 NC=24 BW=8 STDOUT=0
+  EL29_RL9_DL0_NI0_NR129_NC136_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=29 RL=9 DL=0 NI=0 NR=129 NC=136 BW=12 STDOUT=0
+  EL11_RL4_DL0_NI3_NR66_NC4_BW20_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=11 RL=4 DL=0 NI=3 NR=66 NC=4 BW=20 STDOUT=0
+  EL0_RL15_DL0_NI0_NR163_NC176_BW28_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=0 RL=15 DL=0 NI=0 NR=163 NC=176 BW=28 STDOUT=0
+  EL26_RL8_DL0_NI1_NR142_NC196_BW36_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=26 RL=8 DL=0 NI=1 NR=142 NC=196 BW=36 STDOUT=0
+  EL64_RL18_DL0_NI1_NR27_NC236_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=64 RL=18 DL=0 NI=1 NR=27 NC=236 BW=16 STDOUT=0
+  EL90_RL18_DL0_NI1_NR80_NC100_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=90 RL=18 DL=0 NI=1 NR=80 NC=100 BW=12 STDOUT=0
+  EL47_RL17_DL0_NI0_NR65_NC204_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=47 RL=17 DL=0 NI=0 NR=65 NC=204 BW=40 STDOUT=0
+  EL63_RL0_DL0_NI2_NR94_NC116_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=63 RL=0 DL=0 NI=2 NR=94 NC=116 BW=16 STDOUT=0
+  EL69_RL15_DL0_NI0_NR154_NC148_BW8_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=69 RL=15 DL=0 NI=0 NR=154 NC=148 BW=8 STDOUT=0
+  EL35_RL11_DL0_NI1_NR129_NC24_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=35 RL=11 DL=0 NI=1 NR=129 NC=24 BW=40 STDOUT=0
+  EL31_RL1_DL0_NI0_NR3_NC52_BW28_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=31 RL=1 DL=0 NI=0 NR=3 NC=52 BW=28 STDOUT=0
+  EL1_RL20_DL0_NI2_NR85_NC28_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=1 RL=20 DL=0 NI=2 NR=85 NC=28 BW=24 STDOUT=0
+  EL27_RL6_DL0_NI2_NR37_NC120_BW4_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=27 RL=6 DL=0 NI=2 NR=37 NC=120 BW=4 STDOUT=0
+  EL87_RL20_DL0_NI1_NR95_NC180_BW8_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=87 RL=20 DL=0 NI=1 NR=95 NC=180 BW=8 STDOUT=0
+  EL13_RL6_DL0_NI2_NR250_NC44_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=13 RL=6 DL=0 NI=2 NR=250 NC=44 BW=12 STDOUT=0
+  EL45_RL17_DL0_NI2_NR218_NC68_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=45 RL=17 DL=0 NI=2 NR=218 NC=68 BW=16 STDOUT=0
+  EL4_RL5_DL0_NI3_NR208_NC4_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=4 RL=5 DL=0 NI=3 NR=208 NC=4 BW=16 STDOUT=0
+  EL38_RL8_DL0_NI2_NR220_NC196_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=38 RL=8 DL=0 NI=2 NR=220 NC=196 BW=24 STDOUT=0
+  EL62_RL16_DL0_NI3_NR171_NC36_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=62 RL=16 DL=0 NI=3 NR=171 NC=36 BW=40 STDOUT=0
+  EL44_RL9_DL0_NI2_NR197_NC16_BW32_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=44 RL=9 DL=0 NI=2 NR=197 NC=16 BW=32 STDOUT=0
+  EL29_RL5_DL0_NI3_NR182_NC100_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=29 RL=5 DL=0 NI=3 NR=182 NC=100 BW=24 STDOUT=0
+  EL99_RL6_DL0_NI1_NR27_NC4_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=99 RL=6 DL=0 NI=1 NR=27 NC=4 BW=24 STDOUT=0
+  EL89_RL7_DL0_NI1_NR254_NC168_BW36_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=89 RL=7 DL=0 NI=1 NR=254 NC=168 BW=36 STDOUT=0
+  EL87_RL14_DL0_NI3_NR215_NC56_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=87 RL=14 DL=0 NI=3 NR=215 NC=56 BW=16 STDOUT=0
+  EL26_RL4_DL0_NI2_NR208_NC184_BW4_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=26 RL=4 DL=0 NI=2 NR=208 NC=184 BW=4 STDOUT=0
+  EL13_RL7_DL0_NI1_NR101_NC40_BW28_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=13 RL=7 DL=0 NI=1 NR=101 NC=40 BW=28 STDOUT=0
+  EL2_RL20_DL0_NI0_NR138_NC168_BW24_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=2 RL=20 DL=0 NI=0 NR=138 NC=168 BW=24 STDOUT=0
+  EL68_RL10_DL0_NI2_NR196_NC168_BW20_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=68 RL=10 DL=0 NI=2 NR=196 NC=168 BW=20 STDOUT=0
+  EL17_RL2_DL0_NI3_NR104_NC112_BW8_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=17 RL=2 DL=0 NI=3 NR=104 NC=112 BW=8 STDOUT=0
+  EL79_RL16_DL0_NI1_NR110_NC64_BW36_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=79 RL=16 DL=0 NI=1 NR=110 NC=64 BW=36 STDOUT=0
+  EL55_RL14_DL0_NI2_NR234_NC244_BW32_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=55 RL=14 DL=0 NI=2 NR=234 NC=244 BW=32 STDOUT=0
+  EL47_RL5_DL0_NI3_NR9_NC96_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=47 RL=5 DL=0 NI=3 NR=9 NC=96 BW=12 STDOUT=0
+  EL53_RL1_DL0_NI3_NR128_NC200_BW32_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=53 RL=1 DL=0 NI=3 NR=128 NC=200 BW=32 STDOUT=0
+  EL54_RL13_DL0_NI1_NR58_NC224_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=54 RL=13 DL=0 NI=1 NR=58 NC=224 BW=16 STDOUT=0
+  EL83_RL18_DL0_NI3_NR84_NC224_BW32_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=83 RL=18 DL=0 NI=3 NR=84 NC=224 BW=32 STDOUT=0
+  EL2_RL6_DL0_NI0_NR201_NC216_BW28_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=2 RL=6 DL=0 NI=0 NR=201 NC=216 BW=28 STDOUT=0
+  EL94_RL15_DL0_NI0_NR81_NC256_BW32_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=94 RL=15 DL=0 NI=0 NR=81 NC=256 BW=32 STDOUT=0
+  EL78_RL3_DL0_NI1_NR174_NC96_BW4_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=78 RL=3 DL=0 NI=1 NR=174 NC=96 BW=4 STDOUT=0
+  EL98_RL2_DL0_NI1_NR165_NC200_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=98 RL=2 DL=0 NI=1 NR=165 NC=200 BW=40 STDOUT=0
+  EL50_RL13_DL0_NI2_NR230_NC32_BW32_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=50 RL=13 DL=0 NI=2 NR=230 NC=32 BW=32 STDOUT=0
+  EL70_RL19_DL0_NI0_NR166_NC92_BW36_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=70 RL=19 DL=0 NI=0 NR=166 NC=92 BW=36 STDOUT=0
+  EL84_RL16_DL0_NI1_NR34_NC256_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=84 RL=16 DL=0 NI=1 NR=34 NC=256 BW=12 STDOUT=0
+  EL69_RL18_DL0_NI3_NR179_NC96_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=69 RL=18 DL=0 NI=3 NR=179 NC=96 BW=16 STDOUT=0
+  EL41_RL0_DL0_NI3_NR78_NC24_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=41 RL=0 DL=0 NI=3 NR=78 NC=24 BW=16 STDOUT=0
+  EL1_RL2_DL0_NI1_NR164_NC20_BW28_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=1 RL=2 DL=0 NI=1 NR=164 NC=20 BW=28 STDOUT=0
+  EL63_RL6_DL0_NI3_NR132_NC252_BW16_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=63 RL=6 DL=0 NI=3 NR=132 NC=252 BW=16 STDOUT=0
+  EL67_RL16_DL0_NI1_NR100_NC248_BW40_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=67 RL=16 DL=0 NI=1 NR=100 NC=248 BW=40 STDOUT=0
+  EL54_RL10_DL0_NI0_NR105_NC60_BW12_STDOUT0:
+    path: . #ok
+    command: make stimuli sim_trace EL=54 RL=10 DL=0 NI=0 NR=105 NC=60 BW=12 STDOUT=0

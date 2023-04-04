@@ -1,0 +1,25 @@
+camera_basic_tests:
+  EL3_RL0_DL0_NI5_NR223_NC84_BW4:
+    path: . #ok
+    command: make stimuli sim_trace EL=3 RL=0 DL=0 NI=5 NR=223 NC=84 BW=4
+  EL49_RL11_DL0_NI0_NR77_NC124_BW16:
+    path: . #ok
+    command: make stimuli sim_trace EL=49 RL=11 DL=0 NI=0 NR=77 NC=124 BW=16
+  EL85_RL11_DL0_NI1_NR5_NC152_BW16:
+    path: . #ok
+    command: make stimuli sim_trace EL=85 RL=11 DL=0 NI=1 NR=5 NC=152 BW=16
+  EL65_RL10_DL0_NI2_NR124_NC52_BW8:
+    path: . #ok
+    command: make stimuli sim_trace EL=65 RL=10 DL=0 NI=2 NR=124 NC=52 BW=8
+  EL47_RL0_DL0_NI1_NR229_NC108_BW4:
+    path: . #ok
+    command: make stimuli sim_trace EL=47 RL=0 DL=0 NI=1 NR=229 NC=108 BW=4
+  EL49_RL2_DL0_NI2_NR172_NC84_BW400:
+    path: . #ok
+    command: make stimuli sim_trace EL=49 RL=2 DL=0 NI=2 NR=2 NC=84 BW=400
+  EL8_RL10_DL0_NI4_NR25_NC240_BW32:
+    path: . #ok
+    command: make stimuli sim_trace EL=8 RL=10 DL=0 NI=4 NR=25 NC=240 BW=32
+  EL49_RL2_DL0_NI2_NR2_NC84_BW400:
+    path: . #ok
+    command: make stimuli sim_trace EL=49 RL=2 DL=0 NI=2 NR=1 NC=84 BW=400
