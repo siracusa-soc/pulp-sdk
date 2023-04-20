@@ -22,16 +22,17 @@ include rules/pulpos.mk
 CMAKE_FLAGS ?= -j 6
 CMAKE ?= cmake
 
-EL ?= 8
-RL ?= 3
-DL ?= 10
-NI ?= 0
-NR ?= 2
-NC ?= 16
-BW ?= 32
-STDOUT ?= 0
-# ARGS ?= "--trace=cmem:cmem.txt --trace=camera:camera.txt --trace=converter:converter.txt"
-ARGS ?= "--trace=camera"
+HR ?= 640
+VR ?= 480
+F ?= 10
+S ?= 0
+ET ?= 10
+RT ?= 2
+AT ?= 4
+AD ?= 32
+B1 ?= 0x10c00000
+B2 ?= 0x14c00000
+
 build:
 	$(CMAKE) -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 		-DGVSOC_MODULES="$(GVSOC_MODULES)" \
@@ -48,29 +49,29 @@ checkout:
 	git submodule update --recursive --init
 
 
-gvsoc_sim_camera_neureka: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/neureka_interaction && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args=$(ARGS)
-
 gvsoc_sim: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc
 
 gvsoc_sim_trace: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args="--trace=camera/trace"
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=sensor/trace"
 
 gvsoc_sim_trace_file: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args="--trace=camera:log.txt"
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=sensor:log.txt"
 
-gvsoc_sim_trace_cmem_file: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args="--trace=cmem:cmem.txt --trace=camera:camera.txt"
+gvsoc_sim_trace_smem_1: build
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=smem_1 --trace=sensor"
+
+gvsoc_sim_trace_smem_1_file: build
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=smem_1:smem_1.txt --trace=sensor:sensor.txt"
 
 gvsoc_sim_trace_all_file: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args="--trace=.*:all.txt"
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=.*:all.txt"
 
 gvsoc_sim_trace_all: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args="--trace=.*"
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=.*"
 
 gvsoc_sim_args: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/camera/cmem_access && make clean EL=$(EL) RL=$(RL) DL=$(DL) NI=$(NI) NR=$(NR) NC=$(NC) BW=$(BW) STDOUT=$(STDOUT) all run platform=gvsoc runner_args=$(ARGS)
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args=$(ARGS)
 all: checkout build
 
 
