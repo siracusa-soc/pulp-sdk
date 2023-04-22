@@ -58,11 +58,11 @@ gvsoc_sim_trace: build
 gvsoc_sim_trace_file: build
 	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=sensor:log.txt"
 
-gvsoc_sim_trace_smem_1: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=smem_1 --trace=sensor"
+gvsoc_sim_trace_smem: build
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=smem --trace=sensor"
 
-gvsoc_sim_trace_smem_1_file: build
-	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=smem_1:smem_1.txt --trace=sensor:sensor.txt"
+gvsoc_sim_trace_smem_file: build
+	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=smem:smem.txt --trace=sensor:sensor.txt"
 
 gvsoc_sim_trace_all_file: build
 	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/smem_access && make HR=$(HR) VR=$(VR) F=$(F) S=$(S) ET=$(ET) RT=$(RT) AT=$(AT) AD=$(AD) B1=$(B1) B2=$(B2) clean all run platform=gvsoc runner_args="--trace=.*:all.txt"
