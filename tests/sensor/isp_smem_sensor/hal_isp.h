@@ -70,9 +70,10 @@
 #define ISP_REG_FRAME_D2_LENGTH  0x4c
 
 #define ISP_REG_NB_ADCS          0x50
+#define ISP_REG_NB_FRAMES        0x54
 
 
-#define ISP_SPECIAL_TRACE_REG 0x54
+#define ISP_SPECIAL_TRACE_REG 0x58
 #define ISP_L0_JOB_START_END 0
 #define ISP_L1_CONFIG        1
 #define ISP_L2_ACTIV_INOUT   2
