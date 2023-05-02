@@ -267,10 +267,7 @@ xt::xarray<T> NeurekaVectorStore<T>::ex(xt::xarray<T> data, int width, int64_t& 
 
   auto width_words = (addr_end_aligned> addr_start_aligned) ? (addr_end_aligned - addr_start_aligned)/4 : 0;
 
-  // std::cout<<std::hex<<"addr_start_aligned="<<addr_start_aligned<<", addr_end_aligned="<<addr_end_aligned<<std::endl;
-  // std::cout<<std::hex<<"addr_start="<<addr_start<<", addr_end="<<addr_end<<std::endl;
-
-  // std::cout<<std::hex<<"misaligned_start_byte="<<misaligned_start_byte<<", misaligned_end_byte="<<misaligned_end_byte<<std::endl;
+  // std::cout<<"sizeof(T)="<<sizeof(T)<<std::endl;
 
   int64_t max_latency = 0;
   if(enable) {
