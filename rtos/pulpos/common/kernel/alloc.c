@@ -92,9 +92,10 @@ void pos_alloc_dump(pos_alloc_t *a)
 
 
 
-#if 0 //#ifdef ARCHI_MEMORY_POWER
-static __attribute__((noinline)) void pos_alloc_account(pos_alloc_t *a, void *chunk, uint32_t size, int factor, uint32_t standby)
+#ifdef ARCHI_MEMORY_POWER
+__attribute__((noinline)) void pos_alloc_account(pos_alloc_t *a, void *chunk, uint32_t size, int factor, uint32_t standby)
 {
+
     uint32_t bank_size_log2 = a->bank_size_log2;
     uint32_t bank_size = 1<<bank_size_log2;
     uint32_t chunk_addr = ((uint32_t)chunk) - a->first_bank_addr;
@@ -110,6 +111,7 @@ static __attribute__((noinline)) void pos_alloc_account(pos_alloc_t *a, void *ch
     {
         uint32_t *count = standby ? &a->ret_count[bank] : &a->pwd_count[bank];
 
+        // Check case where we allocate and the bank is off, power it up
         if (factor == -1 && *count == bank_size)
         {
             banks_ctrl |= 1<<bank;
@@ -117,6 +119,7 @@ static __attribute__((noinline)) void pos_alloc_account(pos_alloc_t *a, void *ch
 
         *count += iter_size*factor;
 
+        // Case where the bank becomes free, power it down
         if (*count == bank_size)
         {
             banks_ctrl |= 1<<bank;
@@ -138,7 +141,7 @@ static __attribute__((noinline)) void pos_alloc_account(pos_alloc_t *a, void *ch
 
 static void pos_alloc_account_alloc(pos_alloc_t *a, void *chunk, int size)
 {
-#if 0 //#ifdef ARCHI_MEMORY_POWER
+#ifdef ARCHI_MEMORY_POWER
     if (a->track_pwd)
     {
         pos_alloc_account(a, chunk, size, -1, 0);
@@ -146,9 +149,9 @@ static void pos_alloc_account_alloc(pos_alloc_t *a, void *chunk, int size)
 #endif
 }
 
-static void pos_alloc_account_free(pos_alloc_t *a, void *chunk, int size)
+void pos_alloc_account_free(pos_alloc_t *a, void *chunk, int size)
 {
-#if 0 //#ifdef ARCHI_MEMORY_POWER
+#ifdef ARCHI_MEMORY_POWER
     if (a->track_pwd)
     {
         pos_alloc_account(a, chunk, size, 1, 0);
@@ -156,22 +159,6 @@ static void pos_alloc_account_free(pos_alloc_t *a, void *chunk, int size)
 #endif
 }
 
-
-#if 0
-void pos_alloc_conf(pos_alloc_t *a, void *chunk, int size, pos_alloc_conf_e conf)
-{
-#ifdef ARCHI_MEMORY_POWER
-    if (a->track_pwd)
-    {
-
-        if (conf == pos_alloc_CONF_POWER_RET || conf == pos_alloc_CONF_POWER_NON_RET)
-            pos_alloc_account(a, chunk, size, conf == pos_alloc_CONF_POWER_RET ? 1 : -1, 1);
-        else
-            pos_alloc_account(a, chunk, size, conf == pos_alloc_CONF_POWER_DOWN ? 1 : -1, 0);
-    }
-#endif
-}
-#endif
 
 
 
@@ -193,6 +180,7 @@ void pos_alloc_init(pos_alloc_t *a, void *_chunk, int size)
 void *pos_alloc(pos_alloc_t *a, int size)
 {
     ALLOC_TRACE(POS_LOG_TRACE, "Allocating memory chunk (alloc: %p, size: 0x%8x)\n", a, size);
+    //printf("Allocating memory chunk (alloc: %p, size: 0x%8x)\n", a, size);
 
     pos_alloc_chunk_t *pt = a->first_free, *prev = 0;
 
@@ -200,6 +188,7 @@ void *pos_alloc(pos_alloc_t *a, int size)
 
     while (pt && (pt->size < size))
     {
+        //printf("first_free %p, size %x\n", pt, pt->size);
         prev = pt; pt = pt->next;
     }
 
@@ -207,6 +196,10 @@ void *pos_alloc(pos_alloc_t *a, int size)
     {
         if (pt->size == size)
         {
+            // As this block was the full free block, the beginning of the block was already taken
+            // for the header and was accounted as allocated, so don't account it twice.
+            pos_alloc_account_alloc(a, (void *)(((uint32_t)pt) + sizeof(pos_alloc_chunk_t)), size - sizeof(pos_alloc_chunk_t));
+
             // Special case where the whole block disappears
             // This special case is interesting to support when we allocate aligned pages, to limit fragmentation
             if (prev)
@@ -214,9 +207,7 @@ void *pos_alloc(pos_alloc_t *a, int size)
             else
                 a->first_free = pt->next;
             ALLOC_TRACE(POS_LOG_TRACE, "Allocated memory chunk (alloc: %p, base: %p)\n", a, pt);
-            // As this block was the full free block, the beginning of the block was already taken
-            // for the header and was accounted as allocated, so don't account it twice.
-            pos_alloc_account_alloc(a, (void *)(((uint32_t)pt) + sizeof(pos_alloc_chunk_t)), size - sizeof(pos_alloc_chunk_t));
+            //printf("Allocated memory chunk (alloc: %p, base: %p, size: 0x%8x)\n", a, pt, size);
             return (void *)pt;
         }
         else
@@ -226,6 +217,13 @@ void *pos_alloc(pos_alloc_t *a, int size)
             // and simplify memory power management
             void *result = (void *)((char *)pt);
             pos_alloc_chunk_t *new_pt = (pos_alloc_chunk_t *)((char *)pt + size);
+
+            // Don't account the metadata which were in the newly allocated block as they were
+            // already accounted when the block was freed
+            pos_alloc_account_alloc(a, (void *)((uint32_t)result+ sizeof(pos_alloc_chunk_t)), size - sizeof(pos_alloc_chunk_t));
+            // Instead account the metadata of the new free block
+            pos_alloc_account_alloc(a, new_pt, sizeof(pos_alloc_chunk_t));
+
             new_pt->size = pt->size - size;
             new_pt->next = pt->next;
 
@@ -235,11 +233,7 @@ void *pos_alloc(pos_alloc_t *a, int size)
                 a->first_free = new_pt;
 
             ALLOC_TRACE(POS_LOG_TRACE, "Allocated memory chunk (alloc: %p, base: %p)\n", a, result);
-            // Don't account the metadata which were in the newly allocated block as they were
-            // already accounted when the block was freed
-            pos_alloc_account_alloc(a, (void *)((uint32_t)result+ sizeof(pos_alloc_chunk_t)), size - sizeof(pos_alloc_chunk_t));
-            // Instead account the metadata of the new free block
-            pos_alloc_account_alloc(a, new_pt, sizeof(pos_alloc_chunk_t));
+            //printf("Allocated memory chunk (alloc: %p, base: %p, new free size: %p 0x%8x -> 0x%8x)\n", a, result, &pt->size, pt->size, new_pt->size);
 
             return result;
         }
@@ -247,6 +241,7 @@ void *pos_alloc(pos_alloc_t *a, int size)
     else
     {
         ALLOC_TRACE(POS_LOG_TRACE, "Not enough memory to allocate\n");
+        //printf("Not enough memory to allocate\n");
 
         //rt_warning("Not enough memory to allocate\n");
         return NULL;
@@ -293,6 +288,7 @@ void *pos_alloc_align(pos_alloc_t *a, int size, int align)
 void __attribute__((noinline)) pos_free(pos_alloc_t *a, void *_chunk, int size)
 {
     ALLOC_TRACE(POS_LOG_TRACE, "Freeing memory chunk (alloc: %p, base: %p, size: 0x%8x)\n", a, _chunk, size);
+    //printf("Freeing memory chunk (alloc: %p, base: %p, size: 0x%8x)\n", a, _chunk, size);
 
     pos_alloc_chunk_t *chunk = (pos_alloc_chunk_t *)_chunk;
     pos_alloc_chunk_t *next = a->first_free, *prev = 0, *new;
@@ -308,6 +304,7 @@ void __attribute__((noinline)) pos_free(pos_alloc_t *a, void *_chunk, int size)
         /* Coalesce with next */
         chunk->size = size + next->size;
         chunk->next = next->next;
+        //printf("0 %x\n", chunk->size);
         // The header in the next free was considered allocated, we now have to free it as it will
         // stand in the one being freed.
         pos_alloc_account_free(a, next, sizeof(pos_alloc_chunk_t));
@@ -315,6 +312,7 @@ void __attribute__((noinline)) pos_free(pos_alloc_t *a, void *_chunk, int size)
     else
     {
         chunk->size = size;
+        //printf("1 %x\n", chunk->size);
         chunk->next = next;
     }
 
@@ -324,6 +322,7 @@ void __attribute__((noinline)) pos_free(pos_alloc_t *a, void *_chunk, int size)
         {
             /* Coalesce with previous */
             prev->size += chunk->size;
+            //printf("2 %x\n", prev->size);
             prev->next = chunk->next;
             // The metadata will stand in the previous chunk, we can account the whole chunk
             pos_alloc_account_free(a, _chunk, size);

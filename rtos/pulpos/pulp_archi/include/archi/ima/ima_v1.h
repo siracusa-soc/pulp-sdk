@@ -63,7 +63,8 @@
  *
  */
 
-#define IMA_NB_REGS 		43
+/* 4 used by GVSoC for debugging only */
+#define IMA_NB_REGS 		47
 
 #define IMA_TRIGGER             0x00
 #define IMA_ACQUIRE             0x04
@@ -115,6 +116,11 @@
 #define IMA_PR_ADDR_X           0xa0
 #define IMA_PR_ADDR_Y           0xa4
 #define IMA_PR_VAL              0xa8
+
+/* Used by GVSoC for debugging only */
+#define IMA_PERF_STREAM_IN  0xb0
+#define IMA_PERF_COMPUTE    0xb4
+#define IMA_PERF_STREAM_OUT 0xb8
 
 #define STOR_DWIDTH             4
 #define DAC_PRECISION           8

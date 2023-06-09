@@ -1,5 +1,5 @@
 APP = test
-APP_SRCS += test.c
+APP_SRCS += test_multicluster2.c
 
 ifdef USE_CLUSTER
 APP_CFLAGS += -DCLUSTER -DNUM_CLUSTER=$(USE_CLUSTER)

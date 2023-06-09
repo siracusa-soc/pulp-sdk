@@ -24,7 +24,7 @@
 
 struct pi_cl_dma_cmd_s
 {
-  int id;
+  uint32_t id;
   struct pi_cl_dma_cmd_s *next;
 };
 
@@ -44,6 +44,8 @@ static inline void __cl_dma_wait_safe(pi_cl_dma_cmd_t *copy)
   }
 
   plp_dma_counter_free(counter);
+
+  copy->id = -1;
 }
 
 
@@ -61,15 +63,17 @@ static inline void __cl_dma_wait(pi_cl_dma_cmd_t *copy)
 
   plp_dma_counter_free(counter);
 
+  copy->id = -1;
+
   eu_mutex_unlock_from_id(0);
 }
 
 
-static inline void __cl_dma_memcpy(unsigned int ext, unsigned int loc, unsigned short size, pi_cl_dma_dir_e dir, int merge, pi_cl_dma_cmd_t *copy)
+static inline void __cl_dma_memcpy(unsigned int ext, unsigned int loc, unsigned int size, pi_cl_dma_dir_e dir, int merge, pi_cl_dma_cmd_t *copy)
 {
   eu_mutex_lock_from_id(0);
   
-  int id = -1;
+  int id = copy->id;
   if (!merge) id = plp_dma_counter_alloc();
   unsigned int cmd = plp_dma_getCmd(dir, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   // Prevent the compiler from pushing the transfer before all previous
@@ -82,9 +86,9 @@ static inline void __cl_dma_memcpy(unsigned int ext, unsigned int loc, unsigned 
 }
 
 
-static inline void __cl_dma_memcpy_safe(unsigned int ext, unsigned int loc, unsigned short size, pi_cl_dma_dir_e dir, int merge, pi_cl_dma_cmd_t *copy)
+static inline void __cl_dma_memcpy_safe(unsigned int ext, unsigned int loc, unsigned int size, pi_cl_dma_dir_e dir, int merge, pi_cl_dma_cmd_t *copy)
 {
-  int id = -1;
+  int id = copy->id;
   if (!merge) id = plp_dma_counter_alloc();
   unsigned int cmd = plp_dma_getCmd(dir, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   // Prevent the compiler from pushing the transfer before all previous
@@ -96,7 +100,7 @@ static inline void __cl_dma_memcpy_safe(unsigned int ext, unsigned int loc, unsi
 
 
 #if 0
-static inline void __cl_dma_memcpy_irq(unsigned int ext, unsigned int loc, unsigned short size, pi_cl_dma_dir_e dir, int merge, pi_cl_dma_cmd_t *copy)
+static inline void __cl_dma_memcpy_irq(unsigned int ext, unsigned int loc, unsigned int size, pi_cl_dma_dir_e dir, int merge, pi_cl_dma_cmd_t *copy)
 {
   eu_mutex_lock_from_id(0);
   
@@ -127,23 +131,21 @@ static inline void __cl_dma_memcpy_irq(unsigned int ext, unsigned int loc, unsig
 
 
 
-static inline void __cl_dma_memcpy_2d(unsigned int ext, unsigned int loc, unsigned int size, unsigned int stride, unsigned short length, pi_cl_dma_dir_e dir, int merge, pi_cl_dma_cmd_t *copy)
+static inline void __cl_dma_memcpy_2d(unsigned int ext, unsigned int loc, unsigned int size, unsigned int stride, unsigned int length, pi_cl_dma_dir_e dir, int merge, pi_cl_dma_cmd_t *copy)
 {
-  eu_mutex_lock_from_id(0);
+  //eu_mutex_lock_from_id(0);
   
-  int id = -1;
+  int id = copy->id;
   if (!merge) id = plp_dma_counter_alloc();
 
-  {
-    unsigned int cmd = plp_dma_getCmd(dir, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
-    // Prevent the compiler from pushing the transfer before all previous
-    // stores are done
-    __asm__ __volatile__ ("" : : : "memory");
-    plp_dma_cmd_push_2d(cmd, loc, ext, stride, length);
-    if (!merge) copy->id = id;
-  }
+   unsigned int cmd = plp_dma_getCmd(dir, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+   // Prevent the compiler from pushing the transfer before all previous
+   // stores are done
+   __asm__ __volatile__ ("" : : : "memory");
+   plp_dma_cmd_push_2d(cmd, loc, ext, stride, length);
+   if (!merge) copy->id = id;
 
-  eu_mutex_unlock_from_id(0);
+  //eu_mutex_unlock_from_id(0);
 }
 
 

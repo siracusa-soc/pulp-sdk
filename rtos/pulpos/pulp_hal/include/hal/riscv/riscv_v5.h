@@ -133,6 +133,9 @@ do { \
 
 static inline unsigned int core_id() {
   int hart_id;
+#ifdef __ibex__
+  asm("csrr %0, 0xF14" : "=r" (hart_id) : );
+#else
 #if RISCV_VERSION >= 4 && !defined(RISCV_1_7)
 #if PULP_CHIP_FAMILY == CHIP_GAP
   asm("csrr %0, 0x014" : "=r" (hart_id) : );
@@ -142,11 +145,15 @@ static inline unsigned int core_id() {
 #else
   asm("csrr %0, 0xF10" : "=r" (hart_id) : );
 #endif
-  // in PULP the hart id is {22'b0, cluster_id, core_id}
+#endif
+  // in PULP the hart id is {cluster_id, core_id}
   return hart_id & 0x01f;
 }
 
 static inline unsigned int cluster_id() {  int hart_id;
+#ifdef __ibex__
+  asm("csrr %0, 0xF14" : "=r" (hart_id) : );
+#else
 #if RISCV_VERSION >= 4 && !defined(RISCV_1_7)
 #if PULP_CHIP_FAMILY == CHIP_GAP
   asm("csrr %0, 0x014" : "=r" (hart_id) : );
@@ -156,8 +163,9 @@ static inline unsigned int cluster_id() {  int hart_id;
 #else
   asm("csrr %0, 0xF10" : "=r" (hart_id) : );
 #endif
-  // in PULP the hart id is {22'b0, cluster_id, core_id}
-  return (hart_id >> 5) & 0x3f;
+#endif
+  // in PULP the hart id is {cluster_id, core_id}
+  return (hart_id >> 5) & 0x07ffffff;
 }
 
 #ifndef PLP_NO_BUILTIN
@@ -168,8 +176,8 @@ static inline unsigned int hal_core_id() {
 }
 
 static inline unsigned int hal_cluster_id() {
-  //return cluster_id();
-  return __builtin_pulp_ClusterId();
+  return cluster_id();
+  //return __builtin_pulp_ClusterId();
 }
 
 // TODO replace by compiler builtin
@@ -194,6 +202,9 @@ static inline __attribute__((always_inline)) unsigned int hal_is_fc() {
 
 static inline __attribute__((always_inline)) unsigned int hal_core_id() {
   int hart_id;
+#ifdef __ibex__
+  asm("csrr %0, 0xF14" : "=r" (hart_id) : );
+#else
 #if RISCV_VERSION >= 4 && !defined(RISCV_1_7)
 #if PULP_CHIP_FAMILY == CHIP_GAP
   asm("csrr %0, 0x014" : "=r" (hart_id) : );
@@ -203,12 +214,16 @@ static inline __attribute__((always_inline)) unsigned int hal_core_id() {
 #else
   asm("csrr %0, 0xF10" : "=r" (hart_id) : );
 #endif
-  // in PULP the hart id is {22'b0, cluster_id, core_id}
+#endif
+  // in PULP the hart id is {cluster_id, core_id}
   return hart_id & 0x01f;
 }
 
 static inline __attribute__((always_inline)) unsigned int hal_cluster_id() {
   int hart_id;
+#ifdef __ibex__
+  asm("csrr %0, 0xF14" : "=r" (hart_id) : );
+#else
 #if RISCV_VERSION >= 4 && !defined(RISCV_1_7)
 #if PULP_CHIP_FAMILY == CHIP_GAP
   asm("csrr %0, 0x014" : "=r" (hart_id) : );
@@ -218,8 +233,9 @@ static inline __attribute__((always_inline)) unsigned int hal_cluster_id() {
 #else
   asm("csrr %0, 0xF10" : "=r" (hart_id) : );
 #endif
-  // in PULP the hart id is {22'b0, cluster_id, core_id}
-  return (hart_id >> 5) & 0x3f;
+#endif
+  // in PULP the hart id is {cluster_id, core_id}
+  return (hart_id >> 5) & 0x07ffffff;
 }
 
 static inline __attribute__((always_inline)) unsigned int hal_has_fc() {

@@ -71,7 +71,7 @@ static struct pi_cluster_task task[1];
 static struct pi_task events[1];
 
 static void pe_entry(void *arg) {
-  if(pi_core_id() == 0) {
+  if((pi_core_id() == 0) && (pi_cluster_id() == 0)) {
     glob_errors = run_test();
   }
   pi_cl_team_barrier();

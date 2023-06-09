@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-/* 
+/*
  * Authors:  Geethan Karunaratne, IBM <kar@zurich.ibm.com>
  */
 
@@ -62,6 +62,20 @@ static inline int ima_get_state() {
   return IMA_READ(IMA_CHECK_STATE);
 }
 
+static inline void ima_sleep_eot() {
+  while(ima_get_status())
+  {
+    eu_evt_maskWaitAndClr(1<<ARCHI_CL_EVT_ACC2);
+  }
+}
+
+static inline void ima_sleep_eoacquire() {
+  while(ima_acquire() == -1)
+  {
+    eu_evt_maskWaitAndClr(1<<ARCHI_CL_EVT_ACC3);
+  }
+}
+
 static inline void ima_adc_range(unsigned int adc_low,unsigned int adc_high) {
   IMA_WRITE(adc_low,IMA_ADC_LOW);
   IMA_WRITE(adc_high,IMA_ADC_HIGH);
@@ -75,7 +89,7 @@ static inline void ima_set_plot(unsigned int start_x,unsigned int start_y,unsign
 }
 
 static inline void ima_submit_plot(unsigned int plot_val) {
-  IMA_WRITE(plot_val,IMA_SUBMIT_PLOT);  
+  IMA_WRITE(plot_val,IMA_SUBMIT_PLOT);
 }
 
 static inline void ima_set_job_params(unsigned int start_x,
@@ -113,7 +127,7 @@ static inline void ima_set_multi_jobs_param(unsigned int alpha_in_length,
   IMA_WRITE(alpha_in_stride, IMA_ALPHA_IN_STRIDE);
   IMA_WRITE(beta_in_length,  IMA_BETA_IN_LENGTH);
   IMA_WRITE(beta_in_stride,  IMA_BETA_IN_STRIDE);
-                                    
+
   IMA_WRITE(alpha_out_length, IMA_ALPHA_OUT_LENGTH);
   IMA_WRITE(alpha_out_stride, IMA_ALPHA_OUT_STRIDE);
   IMA_WRITE(beta_out_length,  IMA_BETA_OUT_LENGTH);

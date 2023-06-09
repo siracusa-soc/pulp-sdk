@@ -49,7 +49,7 @@
 #define ARCHI_L2_PRIV1_SIZE  0x00008000
 
 #define ARCHI_L2_SHARED_ADDR  0x1c010000
-#define ARCHI_L2_SHARED_SIZE  0x001F0000
+#define ARCHI_L2_SHARED_SIZE  0x37FF0000
 
 
 
@@ -90,8 +90,9 @@
 #ifndef ARCHI_CLUSTER_NB_PE
 #define ARCHI_CLUSTER_NB_PE 8
 #endif
+#ifndef ARCHI_NB_CLUSTER
 #define ARCHI_NB_CLUSTER    1
-
+#endif
 
 
 /*
@@ -106,7 +107,7 @@
  * FC
  */
 
-#define ARCHI_FC_CID        31
+#define ARCHI_FC_CID        64
 #define ARCHI_HAS_FC_ITC     1
 #define ARCHI_HAS_FC         1
 

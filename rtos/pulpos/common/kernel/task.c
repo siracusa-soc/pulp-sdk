@@ -28,13 +28,13 @@ PI_FC_TINY pi_task_t *pos_sched_last;
 
 
 
-void pos_task_handle_blocking(void *arg)
+POS_TEXT_L2 void pos_task_handle_blocking(void *arg)
 {
     pi_task_t *task = arg;
-    task->done = 1;
+    task->arg[0] = 0;
 }
 
-void pos_task_handle()
+POS_TEXT_L2 void pos_task_handle()
 {
     pi_task_t *task = pos_sched_first;
 
@@ -68,37 +68,44 @@ void pos_task_handle()
     }
 }
 
-void pos_task_handle_polling()
+
+POS_TEXT_L2 void pos_task_flush()
 {
-    pi_task_t *task = pos_sched_first;
-
-    if (unlikely(task == NULL))
+    while(pos_sched_first)
     {
-        // Pop first event from the queue. Loop until we pop a null event
-        // We must always read again the queue head, as the executed
-        // callback can modify the queue 
-        hal_irq_enable();
-        hal_irq_disable();
-        task = *((pi_task_t * volatile *)&pos_sched_first);
+        pos_task_handle();
+    }
+}
+
+
+void pos_task_cancel(pi_task_t *task)
+{
+    pi_task_t *current = pos_sched_first, *prev = NULL;
+
+    while (current && current != task)
+    {
+        prev = current;
+        current = current->next;
     }
 
-    while (likely(task != NULL))
+    if (current)
     {
-        pos_sched_first = task->next;
-
-        // Read event information and put it back in the scheduler
-
-        void (*callback)(void *) = (void (*)(void *))task->arg[0];
-        void *arg = (void *)task->arg[1];
-
-        // Finally execute the event with interrupts enabled
-        hal_irq_enable();
-        callback(arg);
-        hal_irq_disable();
-
-        task = pos_sched_first;
-
+        if (prev)
+        {
+            prev->next = current->next;
+        }
+        else
+        {
+            pos_sched_first = current->next;
+        }
     }
+
+    pos_time_task_cancel(task);
+}
+
+void pi_task_abort(pi_task_t *task)
+{
+    pos_task_cancel(task);
 }
 
 void pos_sched_init()

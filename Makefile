@@ -29,7 +29,7 @@ RT ?= 2
 AT ?= 0
 AD ?= 64
 IET ?= 0
-B ?= 0x10c00000
+B ?= 0x10310000
 
 # A0L ?= 2
 # A1L ?= 2
@@ -174,6 +174,17 @@ gvsoc_isp_sensor_sim_trace_all_file: build
 
 gvsoc_isp_sensor_sim_trace_all: build
 	cd /scratch/prasadar/siracusa/camera/pulp-sdk/tests/sensor/isp_smem_sensor && make S=$(S) ET=$(ET) IET=$(IET) RT=$(RT) AT=$(AT) S_AD=$(S_AD) I_AD=$(I_AD) B=$(B) S_F0L=$(S_F0L) S_F1L=$(S_F1L) S_F2L=$(S_F2L) S_R0L=$(S_R0L) S_R1L=$(S_R1L) S_R2L=$(S_R2L) S_A0L=$(S_A0L) S_A1L=$(S_A1L) S_A2L=$(S_A2L) S_F0S=$(S_F0S) S_F1S=$(S_F1S) S_F2S=$(S_F2S) S_R0S=$(S_R0S) S_R1S=$(S_R1S) S_R2S=$(S_R2S) S_A0S=$(S_A0S) S_A1S=$(S_A1S) S_A2S=$(S_A2S) I_F0L=$(I_F0L) I_F1L=$(I_F1L) I_F2L=$(I_F2L) I_R0L=$(I_R0L) I_R1L=$(I_R1L) I_R2L=$(I_R2L) I_A0L=$(I_A0L) I_A1L=$(I_A1L) I_A2L=$(I_A2L) I_F0S=$(I_F0S) I_F1S=$(I_F1S) I_F2S=$(I_F2S) I_R0S=$(I_R0S) I_R1S=$(I_R1S) I_R2S=$(I_R2S) I_A0S=$(I_A0S) I_A1S=$(I_A1S) I_A2S=$(I_A2S) clean all run platform=gvsoc runner_args="--trace=.*" && python3 filecmp_script.py
+
+
+gvsoc_hello: build 
+	cd tests/hello && make clean all run
+
+gvsoc_hello_trace: build 
+	cd tests/hello && make clean all run runner_args="--trace=fc"
+
+gvsoc_hello_trace_all: build 
+	cd tests/hello && make clean all run runner_args="--trace=.* --trace-level=trace"
+
 
 all: checkout build
 
