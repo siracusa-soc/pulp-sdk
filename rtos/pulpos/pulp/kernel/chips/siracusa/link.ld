@@ -39,16 +39,16 @@ SECTIONS
     . = ALIGN(32);
     *(.weightmem_sram)
     *(.weightmem_sram.*)
-    KEEP( *(.weightmem_sram) )
+    _emram_start = .;
   } > WEIGHTMEM_SRAM
 
   .weightmem_mram :
   {
-    . = ALIGN(32);
+    _mram_dst = .;
     *(.weightmem_mram)
     *(.weightmem_mram.*)
-    KEEP( *(.weightmem_mram) )	
-  } > WEIGHTMEM_MRAM
+    _mram_end = .;
+  } > WEIGHTMEM_MRAM AT> WEIGHTMEM_SRAM
 
 
   .data_tiny_fc :
